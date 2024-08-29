@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- Header -->
+<th:block th:insert="~{/thymeleaf/include/header.html :: header(title='Member Board')}"></th:block>
+<!-- //Header -->
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper" style="width: 90%">
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <!-- Header -->
+        <header id="header">
+          <h2>Member Board</h2>
+          <!-- 
+          <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span
+                class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-facebook-f"><span
+                class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands fa-snapchat-ghost"><span
+                class="label">Snapchat</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span
+                class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon brands fa-medium-m"><span
+                class="label">Medium</span></a></li>
+          </ul>
+           -->
+        </header>
+
+        <!-- Content -->
+        <section style="padding: 3em 0 3em 0;">
+          <!-- Elements -->
+          <hr />
+          
+          <div class="table-wrapper">
+            <table id="memberBoardTable">
+              <colgroup>
+                <col width="7%"><!-- NO. -->
+                <col > <!-- 제목 -->
+                <col width="15%"> <!-- 작성자 -->
+                <col width="20%"><!-- 날짜 -->
+                <col width="7%"><!-- 조회수 -->
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>NO.</th>
+                  <th>Title</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Hits</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="memberBoard: ${memberBoardList}">
+                  <td>[[${memberBoard.idx}]]</td>
+                  <td class="title" th:id="|detail${memberBoard.idx}|">[[${memberBoard.title}]]</td>
+                  <td>[[${memberBoard.nickname}]]</td>
+                  <td>[[${memberBoard.createdAt}]]</td>
+                  <td>[[${memberBoard.hits}]]</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <ul th:object="${pager}" class="pagination" style="margin-left: 1.5em;">
+                <li>
+                  <a href="javascript:void(0)" class="button" th:classappend="*{block == 1} ? 'disabled' : ''" th:href="@{/board/member/list?page=1}">
+                    First
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" class="button small" th:classappend="*{block == 1} ? 'disabled' : ''" th:href="@{|/board/member/list?page=*{prevPage}|}">
+                   <<
+                  </a>
+                </li>
+                <th:block th:each="pageNum : *{#numbers.sequence(bsPage,bePage)}">
+                  <li>
+                    <a href="javascript:void(0)" class="page" th:classappend="*{page} == ${pageNum} ? 'active' : ''" th:href="@{|/board/member/list?page=${pageNum}|}">
+                      [[${pageNum}]]
+                    </a>
+                  </li>
+                </th:block>
+                <li>
+                  <a href="javascript:void(0)" class="button small" th:classappend="*{block == totalBlock} ? 'disabled' : ''" th:href="@{|/board/member/list?page=*{nextPage}|}">
+                    >>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" class="button" th:classappend="*{block == totalBlock} ? 'disabled' : ''" th:href="@{|/board/member/list?page=*{totalPage}|}">
+                    Last
+                  </a>
+                </li>
+              </ul>
+              <div style="margin-left: auto;">
+                  <button class="primary" id="write">글쓰기</button>
+              </div>              
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <th:block th:include="/thymeleaf/include/sidebar.html"></th:block>
+    <!-- //Sidebar -->
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/browser.min.js"></script>
+  <script src="/assets/js/breakpoints.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+  $(".title").on("click", function(){
+	  let id = $(this).attr("id").substring(6);  
+	  window.location.href = "/board/member/detail?idx=" + id;
+  })
+
+  $('#write').on("click", function() {
+      window.location.href = "/board/member/write-form";
+  })  
+	  
+  </script>
+</body>
+</html>

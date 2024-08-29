@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- Header -->
+<th:block th:insert="~{/thymeleaf/include/header.html :: header(title='Free Board')}"></th:block>
+<!-- //Header -->
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper" style="width: 90%">
+    <!-- Main -->
+    <div id="main" >
+      <div class="inner">
+        <!-- Header -->
+        <header id="header">
+          <h2>Free Board</h2>
+        </header>
+
+        <!-- Content -->
+        <section th:object="${freeBoardPost}" style="padding: 3em 0 3em 0;">
+          <h3>글 수정</h3>
+          <hr>
+          <form method="post" action="/board/free/edit">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>              
+            <input type="hidden" th:value="*{idx}" name="idx" id="idx"/>
+            <input type="hidden" th:value="*{password}" name="password" id="passoword">
+            <div class="row gtr-uniform">
+              <div class="col-12">
+                <input type="text" name="title" id="title"
+                  th:value="*{title}" placeholder="글 제목" required/>              
+              </div>            
+              <div class="col-6 col-12-xsmall">
+                <input type="text" name="writer" id="writer"
+                  th:value="*{writer}" placeholder="글쓴이" required/>
+              </div>
+              <div class="col-6 col-12-xsmall">
+                <input type="password" placeholder="비밀번호" disabled
+                  style="background: #BDBDBD; color: #2E2E2E"/>
+              </div>
+              
+              <div class="col-12">
+                <textarea name="contents" id="contents" placeholder="글을 작성하세요." style="height:300px; resize:none;" required>[[*{contents}]]</textarea>
+              </div>
+              
+              <div class="col-12">
+                <ul class="actions">
+                  <li><input type="submit" value="완료"
+                    class="primary" /></li>
+                </ul>
+              </div>
+            </div>
+          </form>
+
+        </section>
+
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <th:block th:include="/thymeleaf/include/sidebar.html"></th:block>
+    <!-- //Sidebar -->
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/browser.min.js"></script>
+  <script src="/assets/js/breakpoints.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+
+</body>
+</html>

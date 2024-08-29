@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>로그인</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+  content="width=device-width, initial-scale=1, user-scalable=no" />
+  
+<link rel="stylesheet" href="/assets/css/main.css?240408" />
+</head>
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper" style="width: 90%">
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <!-- Header -->
+        <header id="header">
+          <h2>로그인</h2>
+        </header>
+
+        <!-- Content -->
+        <section style="padding: 3em 0 3em 0;">
+          <form method="post" style="width:40%">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>               
+            <div class="row gtr-uniform">
+              <div class="col-12">
+                <input type="text" name="username" id="username"
+                  value="" placeholder="ID" required/>              
+              </div>            
+              <div class="col-12">
+                <input type="password" name="password" id="password"
+                  value="" placeholder="비밀번호" required/>              
+              </div>               
+              <div class="col-12">
+                <ul class="actions">
+                  <li>
+                    <input type="submit" value="로그인" class="primary" />
+                  </li>
+                  <li>
+                    <input type="button" class="primary" value="회원가입" id="signUp">
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12">
+                <input type="button" class="primary" value="구글 로그인" id="customLogin">
+              </div>
+              <!-- 
+              <div class="col-12">
+                <div id="googleRendererDiv" >
+                </div>                  
+              </div>
+              -->
+            </div>
+          </form>        
+        </section>
+
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <th:block th:include="/thymeleaf/include/sidebar.html"></th:block>
+    <!-- //Sidebar -->
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/browser.min.js"></script>
+  <script src="/assets/js/breakpoints.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="/assets/jquery.cookie.js"></script>
+  <input type="hidden" id="clientId" th:value="${@environment.getProperty('google.client.id')}" />
+  
+  <script>
+  var clientId = $('#clientId').val();
+  
+  $(function(){
+      var queryString = window.location.search;
+      var params = new URLSearchParams(queryString);
+      var type = params.get('type');
+      var logout = params.get('logout');
+      
+      if (type=='error') {
+          alert('ID 혹은 비밀번호가 맞지 않습니다.');
+      }
+      
+      if (type=='signup') {
+          alert('회원가입이 완료되었습니다.');
+      }      
+      
+      if (type=='no') {
+          alert('가입되지 않은 계정입니다.');
+      }           
+      
+      // delete 'get param' for refresh
+      var originURL = location.protocol + '//' + location.host + location.pathname;
+      window.history.replaceState({}, document.title, originURL);              
+
+      $('#customLogin').on("click", function(){
+          window.location.href = '/login/google/auth';
+      })
+      
+      $('#signUp').on("click", function(){
+          window.location.href = "/signup";
+      })
+
+  })
+  </script>
+
+</body>
+</html>

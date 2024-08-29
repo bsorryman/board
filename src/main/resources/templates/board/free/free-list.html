@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- Header -->
+<th:block th:insert="~{/thymeleaf/include/header.html :: header(title='Free Board')}"></th:block>
+<!-- //Header -->
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper" style="width: 90%">
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <!-- Header -->
+        <header id="header">
+          <h2>Free Board</h2>
+        </header>
+
+        <!-- Content -->
+        <section style="padding: 3em 0 3em 0;">
+          <!-- Content -->
+
+          <hr />
+
+          <!-- Elements -->
+          <div class="table-wrapper">
+            <table id="freeBoardTable">
+              <colgroup>
+                <col width="7%"><!-- NO. -->
+                <col ><!-- 작성자 -->
+                <col width="15%"><!-- 제목  -->
+                <col width="20%"><!-- 날짜 -->
+                <col width="7%"><!-- 조회수 -->
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>NO.</th>
+                  <th>Title</th>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Hits</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="freeBoard: ${freeBoardList}">
+                  <td>[[${freeBoard.idx}]]</td>
+                  <td class="title" th:id="|detail${freeBoard.idx}|">[[${freeBoard.title}]]</td>
+                  <td>[[${freeBoard.writer}]]</td>
+                  <td>[[${freeBoard.createdAt}]]</td>
+                  <td>[[${freeBoard.hits}]]</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <ul th:object="${pager}" class="pagination" style="margin-left: 1.5em;">
+                <li>
+                  <a href="javascript:void(0)" class="button" th:classappend="*{block == 1} ? 'disabled' : ''" th:href="@{/board/free/list?page=1}">
+                    First
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" class="button small" th:classappend="*{block == 1} ? 'disabled' : ''" th:href="@{|/board/free/list?page=*{prevPage}|}">
+                   <<
+                  </a>
+                </li>
+                <th:block th:each="pageNum : *{#numbers.sequence(bsPage,bePage)}">
+                  <li>
+                    <a href="javascript:void(0)" class="page" th:classappend="*{page} == ${pageNum} ? 'active' : ''" th:href="@{|/board/free/list?page=${pageNum}|}">
+                      [[${pageNum}]]
+                    </a>
+                  </li>
+                </th:block>
+                <li>
+                  <a href="javascript:void(0)" class="button small" th:classappend="*{block == totalBlock} ? 'disabled' : ''" th:href="@{|/board/free/list?page=*{nextPage}|}">
+                    >>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" class="button" th:classappend="*{block == totalBlock} ? 'disabled' : ''" th:href="@{|/board/free/list?page=*{totalPage}|}">
+                    Last
+                  </a>
+                </li>
+              </ul>
+              <div style="margin-left: auto;">
+                  <button class="primary" id="write">글쓰기</button>
+              </div>                 
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <th:block th:include="/thymeleaf/include/sidebar.html"></th:block>
+    <!-- //Sidebar -->
+  </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/browser.min.js"></script>
+  <script src="/assets/js/breakpoints.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+  $(function(){
+	  $(".title").on("click", function(){
+		  let id = $(this).attr("id").substring(6);  
+		  window.location.href = "/board/free/detail?idx=" + id;
+	  })
+	  
+	  $('#write').on("click", function() {
+	      window.location.href = "/board/free/write-form";
+	  })
+  })
+  
+  </script>
+</body>
+</html>

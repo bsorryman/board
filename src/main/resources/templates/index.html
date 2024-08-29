@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- Header -->
+<th:block th:insert="~{/include/header.html :: header(title='Main')}"></th:block>
+<!-- //Header -->
+<body class="is-preload">
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <!-- Header -->
+        <header id="header">
+          <h2>MAIN INDEX</h2>
+        </header>
+
+        <!-- Banner -->
+        <section id="banner">
+          <div class="content">
+            <header class="major">
+              <h2>Main Header</h2>
+            </header>
+            <p> Main Sentence</p>
+          </div>
+          <img class="portfolio-image image" src="/images/pic01.jpg" style="width: 30%; height:30%; margin-right: 5 em;" alt="" />
+        </section>
+
+        <!-- Section -->
+
+        <!-- Section -->
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <th:block th:include="//include/sidebar.html"></th:block>
+    <!-- //Sidebar -->
+
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/browser.min.js"></script>
+  <script src="/assets/js/breakpoints.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script>
+  $(function(){
+      var queryString = window.location.search;
+      var params = new URLSearchParams(queryString);
+      var notify = params.get('notify');
+      
+      if (notify=='signup') {
+          alert('회원가입이 완료되었습니다.');
+      }      
+      
+      // delete 'get param' for refresh
+      var originURL = location.protocol + '//' + location.host + location.pathname;
+      window.history.replaceState({}, document.title, originURL);              
+  });
+  </script>
+</body>
+</html>
