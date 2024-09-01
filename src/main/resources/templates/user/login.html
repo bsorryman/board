@@ -65,7 +65,7 @@
       </div>
     </div>
     <!-- Sidebar -->
-    <th:block th:include="/thymeleaf/include/sidebar.html"></th:block>
+    <th:block th:include="/include/sidebar.html"></th:block>
     <!-- //Sidebar -->
 
   </div>
@@ -86,18 +86,21 @@
   $(function(){
       var queryString = window.location.search;
       var params = new URLSearchParams(queryString);
-      var type = params.get('type');
-      var logout = params.get('logout');
+      var notify = params.get('notify');
       
-      if (type=='error') {
+      if (notify=='error') {
+          alert('서버에서 에러가 발생했습니다.');
+      }
+      
+      if (notify=='fail') {
           alert('ID 혹은 비밀번호가 맞지 않습니다.');
       }
       
-      if (type=='signup') {
+      if (notify=='signup') {
           alert('회원가입이 완료되었습니다.');
       }      
       
-      if (type=='no') {
+      if (notify=='no') {
           alert('가입되지 않은 계정입니다.');
       }           
       
@@ -110,7 +113,7 @@
       })
       
       $('#signUp').on("click", function(){
-          window.location.href = "/signup";
+          window.location.href = "/user/signup";
       })
 
   })

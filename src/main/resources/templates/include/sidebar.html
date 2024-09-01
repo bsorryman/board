@@ -24,11 +24,11 @@
                 <strong>&nbsp; [[${#authentication.principal.nickname}]]</strong> 
               </h2>
             </header>
-            <a href="/logout">Log out</a>
+            <a href="/user/logout">Log out</a>
           </th:block>
           <th:block th:if="${#authorization.expression('!isAuthenticated()')}">
-            <a href="/login" class="loginBtn">Log in </a>
-            <a href="/signup" class="logoutBtn">Sign up</a>
+            <a href="/user/login" class="loginBtn">Log in </a>
+            <a href="/user/signup" class="logoutBtn">Sign up</a>
           </th:block>          
 <!--           <img th:src="${#authentication.principal.picture}" -->
 <!--                 alt="" /> -->
