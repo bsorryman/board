@@ -33,13 +33,13 @@ public class SecurityConfig {
             .loginPage("/user/login") // 로그인 URL
             .usernameParameter("username")
             .passwordParameter("password")
-            .successForwardUrl("/")
+            .defaultSuccessUrl("/")
             .permitAll()
             .failureUrl("/user/login?notify=fail") 
             .and()
         .logout() // 로그아웃 관련
             //.logoutUrl("/logout") // 로그아웃 URL -> CSRF 설정 추가하면서 사용 불가 
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+            .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout", "GET"))
             .logoutSuccessUrl("/")
             .permitAll()        
             .and()
